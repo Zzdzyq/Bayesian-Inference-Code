@@ -6,6 +6,7 @@ from cartopy.feature import LAND, OCEAN
 
 plt.rcParams.update({'font.size': 15})
 
+# load the graph and the weights saved earlier
 g = load_graph("/home/zzdzyqzzd/inferred_graph/inferred_100.gt.gz")
 u = GraphView(g)
 weights = np.loadtxt("/home/zzdzyqzzd/inferred_graph/weights_100.txt", delimiter=",")
@@ -34,6 +35,7 @@ ax.add_feature(LAND, edgecolor='black')
 ax.add_feature(OCEAN)
 ax.set_extent([70, 130, 20, 60], crs=ccrs.PlateCarree())
 
+# add in grid lines and labels
 gl = ax.gridlines(
     draw_labels=True,
     linewidth=1, 
@@ -77,6 +79,7 @@ plt.title('Graph Overlay on Satellite Map')
 plt.savefig("/home/zzdzyqzzd/inferred_graph/infer_80.png", dpi=300)
 plt.close()
 
+# create the map for the cities we chose
 sel_loc = [51, 195, 218, 226]
 for loc in sel_loc:
     # generate the figure
@@ -86,6 +89,7 @@ for loc in sel_loc:
     ax.add_feature(OCEAN)
     ax.set_extent([70, 130, 20, 60], crs=ccrs.PlateCarree())
 
+    # add in grid lines and labels
     gl = ax.gridlines(
         draw_labels=True,
         linewidth=1, 

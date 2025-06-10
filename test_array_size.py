@@ -4,7 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
+# directory for data files
 dir = "/home/zzdzyqzzd/saved_pcp"
+
 plt.rcParams.update({'font.size': 15})
 
 # function for getting files within a given directory
@@ -34,6 +36,7 @@ for filename in get_nc4_files(dir):
         res = np.append(res, delta)
 
         if not count % 10:
+            # print and plot the results every 10 cycles
             print(res)
 
             plt.plot(state.get_xvals(), state.get_xhist(), ".", lw = 2)
@@ -64,5 +67,6 @@ for filename in get_nc4_files(dir):
     plt.savefig(f"/home/zzdzyqzzd/inferred_graph/residuals.png")
     plt.close()
 
+    # get the time used to run the process
     timee = time.time()
     print(f'learn time: {timee - times}')

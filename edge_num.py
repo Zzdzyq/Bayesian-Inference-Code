@@ -3,7 +3,9 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+# directory for data files
 dir = "/home/zzdzyqzzd/saved_pcp"
+
 plt.rcParams.update({'font.size': 15})
 
 # function for getting files within a given directory
@@ -13,6 +15,7 @@ def get_nc4_files(directory):
     files.sort()
     return files
 
+# the different timed samples we are going to use
 names = get_nc4_files(dir)
 col = ["r", "b", "y", "g"]
 lege = ["10 years", "1 month", "1 year", "5 years"]
@@ -33,8 +36,8 @@ for i in range(4):
         count += 1
         edges = np.append(edges, state.get_graph().num_edges())
     
+    # plot the resulting edge numbers with respect to counts
     plt.plot(np.arange(11), edges, color = col[i], label = lege[i])
-
 plt.legend()
 plt.xlabel("Learning Cycles")
 plt.ylabel("Number of Edges")

@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 
 plt.rcParams.update({'font.size': 15})
 
+# load the graph and block we saved early to recover the graphview
 g = load_graph("/home/zzdzyqzzd/inferred_graph/inferred_100.gt.gz")
 blocks = np.load("/home/zzdzyqzzd/inferred_graph/inferred_state_100.npy")
 bstate = BlockState(g, b=blocks)
 u = GraphView(g)
 
+# plot the number of edges according to the learning cycles
 num_edges = [0]
 for i in range(10, 101, 10):
     weights = np.loadtxt(f"/home/zzdzyqzzd/inferred_graph/weights_{i}.txt", delimiter=",")
@@ -39,6 +41,7 @@ plt.tight_layout()
 plt.savefig("/home/zzdzyqzzd/inferred_graph/degree_dist.png")
 plt.close()
 
+# the in-build structured graph drawing method
 pos = sfdp_layout(u, bstate.get_blocks())
 graph_draw(u, pos, edge_color=weights,
     ecmap=matplotlib.cm.coolwarm_r, output=f"/home/zzdzyqzzd/inferred_graph/infer_EA_80.png")
@@ -57,6 +60,7 @@ plt.savefig("/home/zzdzyqzzd/inferred_graph/block_relas.png")
 plt.close()
 
 def distance(origin, destination):
+    # algorithm to compute distance based on latitude and longitude
     lat1, lon1 = origin
     lat2, lon2 = destination
     radius = 6371 # km
@@ -70,11 +74,13 @@ def distance(origin, destination):
 
     return d
 
+# the ranges of our selected region
 latrange = np.arange(25, 55, 2)
 lonrange = np.arange(75, 125, 2)
 lo = lonrange.shape[0]
 lengths = []
 
+# compute and plot the lengths of the edges
 for edge in u.get_edges():
     ori = (latrange[edge[0]//lo], lonrange[edge[0]%lo])
     des = (latrange[edge[1]//lo], lonrange[edge[1]%lo])
